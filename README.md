@@ -3,7 +3,7 @@
 A lightweight, browser-based tool to convert code snippets into interactive "Parsons Problems" (drag-and-drop code ordering exercises). 
 
 ## 🚀 Live Demo
-[INSERT YOUR GITHUB PAGES URL HERE]
+[View Live Demo](https://mrvsurya.github.io/parsons-puzzle-generator/)
 
 ## ✨ Features
 * **2D Indentation:** Support for horizontal indentation (essential for Python and logic nesting).
@@ -23,6 +23,3 @@ A lightweight, browser-based tool to convert code snippets into interactive "Par
 3. **Solve:** Drag blocks from the left bank to the right solution area.
 4. **Indent:** Use the arrow buttons on the solution blocks to adjust nesting levels.
 5. **Verify:** Click "Check Answer" to see if your logic matches the original source.
-
-## 📄 License
-This project is open-source and available under the MIT License.
