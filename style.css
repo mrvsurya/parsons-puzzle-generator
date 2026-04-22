@@ -5,29 +5,18 @@ body {
 
 .code-block { 
     cursor: grab; 
-    transition: margin-left 0.2s ease-out; 
+    transition: margin-left 0.2s ease-out, transform 0.1s ease; 
 }
 
 .code-block:active { 
     cursor: grabbing; 
+    transform: scale(1.02);
 }
 
 .no-select { 
     user-select: none; 
 }
 
-/* Ensure buttons don't trigger drag events accidentally */
 button { 
     touch-action: none; 
-}
-
-@keyframes hint-glow {
-    0% { box-shadow: 0 0 0px #f59e0b; border-color: #f59e0b; }
-    50% { box-shadow: 0 0 20px #f59e0b; border-color: #f59e0b; transform: scale(1.02); }
-    100% { box-shadow: 0 0 0px #f59e0b; border-color: #e5e7eb; }
-}
-
-.hint-highlight {
-    animation: hint-glow 1.5s ease-in-out;
-    z-index: 10;
 }

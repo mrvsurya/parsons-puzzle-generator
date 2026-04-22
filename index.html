@@ -13,30 +13,48 @@
 
     <header class="mb-8 text-center">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">Parsons Puzzle Generator</h1>
-        <p class="text-gray-600">Drag blocks to the right and order them. Use the arrow buttons to indent.</p>
+        <p class="text-gray-600">Order the code blocks and adjust indentation to solve the puzzle.</p>
     </header>
 
     <main class="max-w-6xl mx-auto w-full bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row min-h-[600px]">
         
         <div id="setupPanel" class="w-full p-8 flex flex-col gap-4">
             <h2 class="text-xl font-semibold text-gray-700">Create New Puzzle</h2>
-            <p class="text-sm text-gray-500">Paste your code below. Use the <strong>Tab key</strong> to indent your original code.</p>
-			<div class="flex items-center gap-2 mb-4">
-				<input type="checkbox" id="strictIndent" checked class="w-4 h-4 text-blue-600">
-				<label for="strictIndent" class="text-sm text-gray-600 cursor-pointer">Require strict indentation</label>
-			</div>
             <textarea id="inputCode" class="w-full h-64 p-4 font-mono text-sm bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none" 
-            placeholder="def client():&#10;    import socket&#10;    s = socket.socket()"></textarea>
-            <button onclick="generatePuzzle()" class="self-end bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition">
-                Generate Puzzle
-            </button>
+            placeholder="def hello():&#10;    print('World')"></textarea>
+            
+            <div class="flex items-center gap-2 mb-2">
+                <input type="checkbox" id="strictIndent" checked class="w-4 h-4 text-blue-600">
+                <label for="strictIndent" class="text-sm text-gray-600 cursor-pointer">Require strict indentation (PEP 8)</label>
+            </div>
+
+            <p class="text-xs text-gray-500 italic">
+                <strong>Note:</strong> This tool uses URL-based sharing. No database is required; all puzzle data is encoded directly into the link shared with students.
+            </p>
+
+            <div class="flex flex-wrap gap-2 self-end mt-2">
+                <button onclick="sharePuzzle('student')" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded-lg transition">
+                    <i class="fa-solid fa-user-grad mr-2"></i> Copy Student Link
+                </button>
+                <button onclick="sharePuzzle('teacher')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition">
+                    <i class="fa-solid fa-chalkboard-user mr-2"></i> Copy Teacher Link
+                </button>
+                <button onclick="generatePuzzle()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition">
+                    Preview Puzzle
+                </button>
+            </div>
         </div>
 
         <div id="puzzlePanel" class="hidden w-full flex flex-col md:flex-row h-full">
             <div class="md:w-1/3 bg-gray-100 p-4 border-r border-gray-200 overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-semibold text-gray-700">Source Blocks</h3>
-                    <button onclick="resetPuzzle()" class="text-xs text-red-500 hover:text-red-700 underline">Reset / New</button>
+                    <div class="flex gap-3">
+                        <button id="backToEditorBtn" onclick="goBackToEditor()" class="text-xs text-blue-500 hover:text-blue-700 underline hidden">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Back to Editor
+                        </button>
+                        <button id="resetBtn" onclick="resetPuzzle()" class="text-xs text-red-500 hover:text-red-700 underline">Reset / New</button>
+                    </div>
                 </div>
                 <div id="sourceList" class="min-h-[400px] flex flex-col gap-2 pb-20"></div>
             </div>
@@ -46,18 +64,18 @@
                     <h3 class="font-semibold text-gray-700">Your Solution</h3>
                     <div id="statusMessage" class="text-sm font-bold"></div>
                 </div>
-                <div id="solutionList" class="flex-grow min-h-[400px] flex flex-col gap-2 border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 pb-20"></div>
-				 <div class="absolute bottom-6 right-6 flex gap-4">
-					<button onclick="provideHint()" class="shadow-lg bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-full transition transform hover:scale-105">
-						<i class="fa-solid fa-lightbulb mr-2"></i> Hint
-					</button>
-					<button onclick="checkAnswer()" class="shadow-lg bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
-						<i class="fa-solid fa-check mr-2"></i> Check Answer
-					</button>
-				</div>
+                <div id="solutionList" class="flex-grow min-h-[400px] flex flex-col gap-2 border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 pb-24"></div>
+                
+                <div class="absolute bottom-6 right-6 flex gap-4">
+                    <button id="viewSolutionBtn" onclick="toggleSolution()" class="hidden shadow-lg bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-full transition">
+                        <i class="fa-solid fa-eye mr-2"></i> Show Solution
+                    </button>
+                    <button onclick="checkAnswer()" class="shadow-lg bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
+                        <i class="fa-solid fa-check mr-2"></i> Check Answer
+                    </button>
+                </div>
             </div>
         </div>
-
     </main>
 
     <script src="script.js"></script>
